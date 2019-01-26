@@ -56,13 +56,13 @@ for city in city_list:
     print(lat, lng)
     time.sleep(5)
 
-# the_file = "citycoordinates.txt"
-# f = open(the_file, "w")
-# f.write(str(city_map))
-# f.close()
-#
-# the_file = "spanishtoenglish.txt"
-# f = open(the_file, "w")
-# f.write(str(city_to_english_map))
-# f.close()
+the_file = "citycoordinates.txt"
+f = open(the_file, "w")
+f.write(str(city_map))
+f.close()
+
+the_file = "spanishtoenglish.txt"
+f = open(the_file, "w")
+f.write(str(city_to_english_map))
+f.close()
 
