@@ -88,7 +88,7 @@ for i in range(num_chunks):
             destination_string += re.sub(" +", "+", city) + "|"
         destination_string = destination_string[:-1]
         api_url += destination_string
-        api_url += '&mode=driving&language=en&key=AIzaSyDb3dox_85hXQ9-C1LEa8YQBjetxlliq1Q'
+        api_url += '&mode=driving&language=en&key=AIzaSyBFsNQbBHT013Pkcg1QShwFRcBIxn3KCsE'
         print(api_url)
         call_counter += 1
         response_json = get_json(api_url)
@@ -116,10 +116,11 @@ for i in range(num_chunks):
 
 write_file = "distancematrix.txt"
 f = open(write_file, "w")
-f.write(str(distance))
+for row in distance:
+    f.write(str(row))
 f.close()
 
-city_names_file = "citynames.txt"
+city_names_file = "googleapicitynames.txt"
 f = open(city_names_file, "w")
 f.write(str(english_city_names))
 f.close()

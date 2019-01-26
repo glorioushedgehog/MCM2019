@@ -36,9 +36,9 @@ english_names = []
 for name in spanish_names:
     english_names.append(name_map[name])
 print(english_names)
-f = open("english_city_names.txt", "w")
-f.write(str(english_names))
-f.close()
+# f = open("english_city_names.txt", "w")
+# f.write(str(english_names))
+# f.close()
 population_map = get_city_map()
 english_pop_map = {}
 for spanish_name in population_map.keys():
@@ -47,6 +47,6 @@ for spanish_name in population_map.keys():
     english = name_map[spanish_name]
     english_pop_map[english] = population_map[spanish_name]
 print(english_pop_map)
-f = open("english_pop_map.txt", "w")
-f.write(str(english_pop_map))
-f.close()
+# f = open("english_pop_map.txt", "w")
+# f.write(str(english_pop_map))
+# f.close()

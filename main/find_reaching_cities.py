@@ -1,9 +1,3 @@
-f = open("crow_distance_matrix.txt", "r")
-distance = []
-for line in f:
-    distance.append(eval(line))
-f.close()
-
 f = open("english_city_names.txt", "r")
 names = eval(f.readline())
 f.close()
@@ -26,3 +20,15 @@ for i in range(len(names)):
 # HIMA: 137
 # carribean: 140
 # santurce: 224
+
+drops = [10, 22, 81, 137, 140, 224]
+
+# as in citycoordinates.txt:
+# "18�11'11. 66�04'38., 8 Calle 6, Caguas, 00725, Puerto Rico"
+# "Bayam�n, Puerto Rico"
+
+# Animas comunidad, Arecibo Municipio
+# Los Panes comunidad, Caguas Municipio
+# Luis M. Cintron comunidad, Fajardo Municipio
+# San Juan zona urbana, San Juan Municipio
+# Bayamon zona urbana, Bayamon Municipio

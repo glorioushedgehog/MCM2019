@@ -31,7 +31,6 @@ def get_json(url):
 f = open("spanishcitynames.txt", "r")
 city_list = eval(f.readline())
 city_map = {}
-city_to_english_map = {}
 string = ''
 count = 0
 for city in city_list:
@@ -47,22 +46,20 @@ for city in city_list:
     loc = response_json["results"][0]["geometry"]["location"]
     lat = float(loc["lat"])
     lng = float(loc["lng"])
-    city_english_name = response_json["results"][0]["formatted_address"]
-    city_map[city_english_name] = [lat, lng]
-    city_to_english_map[city] = city_english_name
+    city_map[city] = [lat, lng]
     count += 1
     print(api_url)
     print("done", count)
     print(lat, lng)
     time.sleep(5)
 
-the_file = "citycoordinates.txt"
+the_file = "spanishcitycoordinates.txt"
 f = open(the_file, "w")
 f.write(str(city_map))
 f.close()
 
-the_file = "spanishtoenglish.txt"
-f = open(the_file, "w")
-f.write(str(city_to_english_map))
-f.close()
+# the_file = "spanishtoenglish.txt"
+# f = open(the_file, "w")
+# f.write(str(city_to_english_map))
+# f.close()
 

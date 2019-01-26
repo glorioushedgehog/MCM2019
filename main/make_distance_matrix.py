@@ -17,12 +17,20 @@ def get_dist(coord1, coord2):
     return d
 
 
-f = open("citycoordinates.txt", "r")
+f = open("englishcitycoordinates.txt", "r")
 line = f.readline()
 city_map = eval(line)
 matrix = []
-num_cities = len(city_map.keys())
-city_list = list(city_map.keys())
+f.close()
+f = open("english_city_names.txt", "r")
+old_city_list = eval(f.readline())
+f.close()
+city_list = []
+for cit in old_city_list:
+    if cit in city_map:
+        city_list.append(cit)
+print("working with", len(city_list))
+num_cities = len(city_list)
 for _ in range(num_cities):
     temp = [-1] * num_cities
     matrix.append(temp)
@@ -35,7 +43,7 @@ for i in range(num_cities):
         matrix[i][j] = distance
 
 print(matrix[0])
-f = open("crow_distance_matrix.txt", "w")
-for line in matrix:
-    f.write(str(line) + "\n")
-f.close()
+# f = open("crow_distance_matrix.txt", "w")
+# for line in matrix:
+#     f.write(str(line) + "\n")
+# f.close()
