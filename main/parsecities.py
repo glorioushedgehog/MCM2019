@@ -6,11 +6,11 @@ import requests
 
 
 def get_city_map():
-    f = open("puertoricocities.txt", "r")
+    fo = open("puertoricocities.txt", "r")
     city_map = {}
     found_city = False
-    city = "INITIAL_CITY"
-    for line in f:
+    cityo = "INITIAL_CITY"
+    for line in fo:
         line = line.strip()
         if line:
             x = re.findall("[0-9]", line[0])
@@ -19,10 +19,10 @@ def get_city_map():
                     line = re.sub(",", "", line)
                     num = float(line)
                     found_city = False
-                    city_map[city] = num
+                    city_map[cityo] = num
             else:
                 found_city = True
-                city = line
+                cityo = line
             # print(line)
     return city_map
 
