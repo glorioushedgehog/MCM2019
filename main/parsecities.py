@@ -88,7 +88,7 @@ for i in range(num_chunks):
             destination_string += re.sub(" +", "+", city) + "|"
         destination_string = destination_string[:-1]
         api_url += destination_string
-        api_url += '&mode=driving&language=en&key=AIzaSyBFsNQbBHT013Pkcg1QShwFRcBIxn3KCsE'
+        api_url += '&mode=driving&language=en&key='
         print(api_url)
         call_counter += 1
         response_json = get_json(api_url)

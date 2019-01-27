@@ -37,7 +37,7 @@ for city in city_list:
     string = re.sub(" +", "+", city)
     api_url = 'https://maps.googleapis.com/maps/api/geocode/json?address='
     api_url += string
-    api_url += '&key=AIzaSyB4CuuupKyNnkAhcaQTVp8SttkAFzKQD5o'
+    api_url += '&key='
     response_json = get_json(api_url)
     if response_json["status"] != "OK":
         print(api_url)
