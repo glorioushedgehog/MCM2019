@@ -161,40 +161,23 @@ def new_get_route_length(route_cities):
 
 
 def new_get_routes(start, city_locs):
-    candidate_route = [start, city_locs.pop()]
-    while start in candidate_route and new_get_route_length(candidate_route) < (drone_reach*2):
-        last = city_locs.pop()
-        candidate_route.append(last)
-        candidate_route = convex_hull_graham(candidate_route)
-    old_len = len(candidate_route)
-    candidate_route.remove(last)
-    if len(candidate_route) != old_len - 1:
-        print("removal didn't work")
-    print("route", len(candidate_route))
-    candidate_route = convex_hull_graham(candidate_route + [start])
-    return [candidate_route]
-
-
-
-
-
-
-
-
-    route_list = []
-    route = [start]
-    while city_locs:
-        last_success_ago = 0
-        candidate = city_locs[0]
-        candidate_route = convex_hull_graham(route + [candidate])
-        if start in candidate_route and new_get_route_length(candidate_route) < drone_reach:
-            route.append(city_locs.pop())
-            last_success_ago = 0
-        if last_success_ago > len(city_locs):
-            route_list.append(route)
-            route = [start]
-        last_success_ago += 1
-    return route_list
+    routess = []
+    while len(city_locs) > 1:
+        candidate_route = [start]
+        while city_locs and start in candidate_route and new_get_route_length(candidate_route) < (drone_reach*2):
+            last = city_locs.pop()
+            candidate_route.append(last)
+            candidate_route = convex_hull_graham(candidate_route)
+        old_len = len(candidate_route)
+        candidate_route.remove(last)
+        city_locs.append(last)
+        if len(candidate_route) != old_len - 1:
+            print("removal didn't work")
+        candidate_route = convex_hull_graham(candidate_route + [start])
+        routess.append(candidate_route)
+    if city_locs:
+        routess.append(city_locs + [start])
+    return routess
 
 
 for i in range(3):
@@ -212,9 +195,17 @@ for i in range(3):
     print(cargo[i])
     option_coords = get_coords(options)
     routes = new_get_routes(cargo[i], option_coords)
+    visited = 0
+    print("num routes:", len(routes))
+    f = open("route" + str(i + 1), "w")
     for route in routes:
-        print(route)
-        print("route length:", new_get_route_length(route))
+        f.write(str(route) + "\n")
+    f.close()
+    for route in routes:
+        visited += len(route) - 1
+        # print(route)
+        # print("route length:", new_get_route_length(route))
+    print("num visited:", visited)
 
 
 print(len(unique_options), "reachable cities total")

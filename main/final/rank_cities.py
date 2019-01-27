@@ -109,7 +109,7 @@ ff.close()
 
 ranking = queue.PriorityQueue()
 good_coords = set()
-
+unique_good_cities = set()
 for drone in "ABCDEFG":
     for cargo in "123":
         if cargo == "1":
@@ -138,12 +138,14 @@ for drone in "ABCDEFG":
             if not bad_city:
                 good_coords.add(tuple(city_map[city]))
                 good_cities.append(city)
-
+                unique_good_cities.add(city)
         # score based on recon value
         for city in good_cities:
             score = reachable_population(city_pop, city_map, city, drone)
             ranking.put((score, cargo + drone + " at " + city, city_map[city]))
-
+# for cit in unique_good_cities:
+#     print(cit)
+print(len(unique_good_cities))
 c1 = []
 c2 = []
 c3 = []
