@@ -2,6 +2,7 @@ import math
 import queue
 import numpy as np
 
+
 #
 # def get_dist(coord1, coord2):
 #     lat1, lon1 = coord1
@@ -19,18 +20,18 @@ import numpy as np
 #     return d
 
 
-def get_dist(p1,p2):
+def get_dist(p1, p2):
     R = 6.371e6
 
-    lat1 = p1[0]*np.pi/180
-    lon1 = p1[1]*np.pi/180
-    lat2 = p2[0]*np.pi/180
-    lon2 = p2[1]*np.pi/180
+    lat1 = p1[0] * np.pi / 180
+    lon1 = p1[1] * np.pi / 180
+    lat2 = p2[0] * np.pi / 180
+    lon2 = p2[1] * np.pi / 180
 
     dlon = lon2 - lon1
     dlat = lat2 - lat1
-    a = (np.sin(dlat/2))**2 + np.cos(lat1) * np.cos(lat2) * (np.sin(dlon/2))**2
-    c = 2 * np.arctan2(np.sqrt(a), np.sqrt(1-a))
+    a = (np.sin(dlat / 2)) ** 2 + np.cos(lat1) * np.cos(lat2) * (np.sin(dlon / 2)) ** 2
+    c = 2 * np.arctan2(np.sqrt(a), np.sqrt(1 - a))
     distance = R * c
     return distance
 
@@ -82,7 +83,7 @@ d = [60, 18, 15]
 e = [60, 15, 15]
 f = [79, 24, 15]
 g = [64, 16, 15]
-distance_factor = 1.414
+distance_factor = 1.4
 no_recharge = True
 
 dronedict = {tuple(a): 'a', tuple(b): 'b', tuple(c): 'c', tuple(d): 'd',
@@ -107,61 +108,64 @@ ff = open("spanishcitycoordinates.txt", "r")
 city_map = eval(ff.readline())
 ff.close()
 
-ranking = queue.PriorityQueue()
-good_coords = set()
-unique_good_cities = set()
-for drone in "ABCDEFG":
-    for cargo in "123":
-        if cargo == "1":
-            drops = [epsilon]
-        elif cargo == "2":
-            drops = [alpha, gamma, delta]
-        else:
-            drops = [beta]
-        drone_map = {
-            "A": a,
-            "B": b,
-            "C": c,
-            "D": d,
-            "E": e,
-            "F": f,
-            "G": g
-        }
-        drone_data = drone_map[drone]
-        good_cities = []
-        for city in city_map.keys():
-            bad_city = False
-            for drop in drops:
-                if not range_check(city_map[city], drop[1], drone_data, drop)[0]:
-                    bad_city = True
-                    break
-            if not bad_city:
-                good_coords.add(tuple(city_map[city]))
-                good_cities.append(city)
-                unique_good_cities.add(city)
-        # score based on recon value
-        for city in good_cities:
-            score = reachable_population(city_pop, city_map, city, drone)
-            ranking.put((score, cargo + drone + " at " + city, city_map[city]))
-# for cit in unique_good_cities:
-#     print(cit)
-print(len(unique_good_cities))
-c1 = []
-c2 = []
-c3 = []
-while not ranking.empty():
-    candidate = ranking.get()
-    if candidate[1].startswith("1"):
-        c1 = candidate
-    if candidate[1].startswith("2"):
-        c2 = candidate
-    if candidate[1].startswith("3"):
-        c3 = candidate
-
-print(c1)
-print(c2)
-print(c3)
-print(len(good_coords))
-print("total population connected:", c1[0] + c2[0] + c3[0])
-# fff = open("163cities.txt", "w")
-# fff.write(str(list(good_coords)))
+for cargo in "123":
+    ranking = queue.PriorityQueue()
+    if cargo == "1":
+        drops = [epsilon]
+    elif cargo == "2":
+        drops = [alpha, gamma, delta]
+    else:
+        drops = [beta]
+    drone_map = {
+        "A": a,
+        "B": b,
+        "C": c,
+        "D": d,
+        "E": e,
+        "F": f,
+        "G": g
+    }
+    drone_data = drone_map["B"]
+    good_cities = []
+    for city in city_map.keys():
+        bad_city = False
+        for drop in drops:
+            if not range_check(city_map[city], drop[1], drone_data, drop)[0]:
+                bad_city = True
+                break
+        if not bad_city:
+            good_cities.append(city)
+    # score based on recon value
+    for city in good_cities:
+        score = reachable_population(city_pop, city_map, city, "B")
+        ranking.put((-score, cargo + "B" + " at " + city, city_map[city]))
+    inde = 0
+    print(cargo, ":")
+    while not ranking.empty():
+        asdf = ranking.get()
+        print(asdf)
+        inde += 1
+        if inde == 10:
+            break
+# # for cit in unique_good_cities:
+# #     print(cit)
+# print(len(unique_good_cities))
+# c1 = []
+# c2 = []
+# c3 = []
+# while not ranking.empty():
+#     candidate = ranking.get()
+#     if candidate[1].startswith("1"):
+#         c1 = candidate
+#     if candidate[1].startswith("2"):
+#         c2 = candidate
+#     if candidate[1].startswith("3"):
+#         c3 = candidate
+#
+# print(c1)
+# print(c2)
+# print(c3)
+# print(len(good_coords))
+# print("total population connected:", c1[0] + c2[0] + c3[0])
+# # fff = open("163cities.txt", "w")
+# # fff.write(str(list(good_coords)))
